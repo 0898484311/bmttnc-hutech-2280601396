@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 from cipher.caesar import CaesarCipher  # giữ nguyên
 from cipher.vigenere import VigenereCipher
 from cipher.railfence import RailFenceCipher  # thêm dòng này
+from cipher.playfair import PlayFairCipher  # Thêm dòng này nếu bạn tách class ra file riêng
+
 
 app = Flask(__name__)
 
@@ -60,7 +62,7 @@ def railfence_encrypt():
     text = request.form['inputPlainText']
     key = int(request.form['inputKeyPlain'])
     rf = RailFenceCipher()
-    encrypted_text = railfence.encrypt(text, key)
+    encrypted_text = rf.rail_fence_encrypt(text, key)
     return f"text: {text}<br/>key: {key}<br/>encrypted text: {encrypted_text}"
 
 @app.route("/railfence/decrypt", methods=['POST'])
@@ -68,7 +70,7 @@ def railfence_decrypt():
     text = request.form['inputCipherText']
     key = int(request.form['inputKeyCipher'])
     rf = RailFenceCipher()
-    decrypted_text = railfence.decrypt(text, key)
+    decrypted_text = rf.rail_fence_decrypt(text, key)
     return f"text: {text}<br/>key: {key}<br/>decrypted text: {decrypted_text}"
 
 if __name__ == "__main__":
